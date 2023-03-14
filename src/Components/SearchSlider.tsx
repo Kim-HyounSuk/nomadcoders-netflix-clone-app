@@ -10,6 +10,7 @@ interface ISearchSliderProps {
   type: string;
   data?: IContent[];
   keyword: string | null;
+  setType: (type: string | undefined) => void;
 }
 
 const Wrapper = styled.div`
@@ -132,7 +133,7 @@ const infoVariants = {
   },
 };
 
-const SearchSlider = ({ type, data, keyword }: ISearchSliderProps) => {
+const SearchSlider = ({ type, data, keyword, setType }: ISearchSliderProps) => {
   const [idx, setIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [reverse, setReverse] = useState(false);
@@ -160,10 +161,13 @@ const SearchSlider = ({ type, data, keyword }: ISearchSliderProps) => {
   };
 
   const navigate = useNavigate();
-  const detailMatch = useMatch(`/search/:contentId`);
+  // const detailMatch = useMatch(`/search/:contentId`);
 
-  const onClickBox = (contentId: number) => {
+  const onClickBox = (contentId: number, type: string) => {
     navigate(`/search/${contentId}?keyword=${keyword}`);
+    ((type) => {
+      setType(type);
+    })(type);
   };
 
   return (
@@ -186,7 +190,7 @@ const SearchSlider = ({ type, data, keyword }: ISearchSliderProps) => {
           >
             {data?.slice(OFFSET * idx, OFFSET * idx + OFFSET).map((content) => (
               <Box
-                onClick={() => onClickBox(content.id)}
+                onClick={() => onClickBox(content.id, type)}
                 key={content.id}
                 bgphoto={makeImagePath(content.backdrop_path, "w500")}
                 variants={boxVariants}
@@ -204,13 +208,12 @@ const SearchSlider = ({ type, data, keyword }: ISearchSliderProps) => {
         <LBtn onClick={decreaseIdx}>◁</LBtn>
         <RBtn onClick={increaseIdx}>▷</RBtn>
       </Container>
-      {detailMatch ? (
+      {/* {detailMatch ? (
         <SearchDetail
           type={type}
           contentId={detailMatch.params.contentId}
-          keyword={keyword}
         />
-      ) : null}
+      ) : null} */}
     </Wrapper>
   );
 };

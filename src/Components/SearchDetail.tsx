@@ -6,9 +6,8 @@ import { getDetail, IDetailContent } from "../api";
 import { makeImagePath } from "../utils";
 
 interface ISearchDetail {
-  type: string;
+  type?: string;
   contentId?: string;
-  keyword: string | null;
 }
 
 const Overlay = styled(motion.div)`
@@ -77,7 +76,7 @@ const DetailOverview = styled.span`
   font-size: 18px;
 `;
 
-const SearchDetail = ({ type, contentId, keyword }: ISearchDetail) => {
+const SearchDetail = ({ type, contentId }: ISearchDetail) => {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
 
@@ -85,6 +84,7 @@ const SearchDetail = ({ type, contentId, keyword }: ISearchDetail) => {
     [`${type}`, `${contentId}`],
     () => getDetail(type, contentId) || null
   );
+
   const onClickOverlay = () => navigate(-1);
   return (
     <AnimatePresence>

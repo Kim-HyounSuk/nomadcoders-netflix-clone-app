@@ -84,7 +84,7 @@ export const getTopRatedTV = () => {
 };
 
 /* <-- Fetch Detail --> */
-export const getDetail = (type: string, contentId?: string) => {
+export const getDetail = (type?: string, contentId?: string) => {
   console.log(type, contentId);
   return fetch(
     `${BASE_PATH}/${type}/${contentId}?api_key=${API_KEY}&language=en-US`
