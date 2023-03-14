@@ -6,7 +6,8 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 /* <-- Component's stylings ->> */
 const Nav = styled(motion.nav)`
@@ -120,6 +121,16 @@ const Header = () => {
     }
   });
 
+  /* Search Implementation*/
+  interface IForm {
+    keyword: string;
+  }
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<IForm>();
+  const onValid = (data: IForm) => {
+    navigate(`/search?keyword=${data.keyword}`);
+  };
+
   return (
     <Nav variants={navVariants} animate={navAnimation} initial="top">
       <Col>
@@ -148,7 +159,7 @@ const Header = () => {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: openSearch ? "-245px" : 0 }}
@@ -164,6 +175,7 @@ const Header = () => {
             />
           </motion.svg>
           <Input
+            {...register("keyword", { required: true, minLength: 2 })}
             initial={{ scaleX: 0 }}
             animate={inputAnimation}
             transition={{ type: "linear" }}

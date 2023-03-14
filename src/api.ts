@@ -85,7 +85,23 @@ export const getTopRatedTV = () => {
 
 /* <-- Fetch Detail --> */
 export const getDetail = (type: string, contentId?: string) => {
+  console.log(type, contentId);
   return fetch(
     `${BASE_PATH}/${type}/${contentId}?api_key=${API_KEY}&language=en-US`
+  ).then((response) => response.json());
+};
+
+/* <-- Fetch Search --> */
+export interface IGetSearch {
+  results: IContent[];
+}
+export const getSearchMovie = (keyword: string | null) => {
+  return fetch(
+    `${BASE_PATH}/search/movie?query=${keyword}&api_key=${API_KEY}&language=en-US`
+  ).then((response) => response.json());
+};
+export const getSearchTV = (keyword: string | null) => {
+  return fetch(
+    `${BASE_PATH}/search/tv?query=${keyword}&api_key=${API_KEY}&language=en-US`
   ).then((response) => response.json());
 };
