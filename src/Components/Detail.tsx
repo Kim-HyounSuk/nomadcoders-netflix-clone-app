@@ -68,12 +68,12 @@ const DetailInfo = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 50px;
-  font-size: 14px;
+  font-size: 18px;
 `;
 const DetailOverview = styled.span`
   color: ${(props) => props.theme.white.light};
   padding: 50px;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 const Detail = ({ type, contentId }: IDetail) => {

@@ -1,4 +1,4 @@
-const API_KEY = "11192a27f5a24d1f6e629154830235f5";
+const API_KEY = process.env.REACT_APP_MOVIEDB_API_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3";
 
 export interface IContent {
