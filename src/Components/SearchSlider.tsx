@@ -10,7 +10,6 @@ interface ISearchSliderProps {
   type: string;
   data?: IContent[];
   keyword: string | null;
-  setType: (type: string | undefined) => void;
 }
 
 const Wrapper = styled.div`
@@ -133,7 +132,7 @@ const infoVariants = {
   },
 };
 
-const SearchSlider = ({ type, data, keyword, setType }: ISearchSliderProps) => {
+const SearchSlider = ({ type, data, keyword }: ISearchSliderProps) => {
   const [idx, setIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [reverse, setReverse] = useState(false);
@@ -161,13 +160,11 @@ const SearchSlider = ({ type, data, keyword, setType }: ISearchSliderProps) => {
   };
 
   const navigate = useNavigate();
-  // const detailMatch = useMatch(`/search/:contentId`);
+  const movieMatch = useMatch(`/search/movie/:contentId`);
+  const tvMatch = useMatch(`/search/tv/:contentId`);
 
-  const onClickBox = (contentId: number, type: string) => {
-    navigate(`/search/${contentId}?keyword=${keyword}`);
-    ((type) => {
-      setType(type);
-    })(type);
+  const onClickBox = (contentId: number, contentType: string | undefined) => {
+    navigate(`/search/${contentType}/${contentId}?keyword=${keyword}`);
   };
 
   return (
@@ -190,7 +187,7 @@ const SearchSlider = ({ type, data, keyword, setType }: ISearchSliderProps) => {
           >
             {data?.slice(OFFSET * idx, OFFSET * idx + OFFSET).map((content) => (
               <Box
-                onClick={() => onClickBox(content.id, type)}
+                onClick={() => onClickBox(content.id, content.media_type)}
                 key={content.id}
                 bgphoto={makeImagePath(content.backdrop_path, "w500")}
                 variants={boxVariants}
@@ -208,12 +205,12 @@ const SearchSlider = ({ type, data, keyword, setType }: ISearchSliderProps) => {
         <LBtn onClick={decreaseIdx}>◁</LBtn>
         <RBtn onClick={increaseIdx}>▷</RBtn>
       </Container>
-      {/* {detailMatch ? (
-        <SearchDetail
-          type={type}
-          contentId={detailMatch.params.contentId}
-        />
-      ) : null} */}
+      {movieMatch ? (
+        <SearchDetail type="movie" contentId={movieMatch.params.contentId} />
+      ) : null}
+      {tvMatch ? (
+        <SearchDetail type="tv" contentId={tvMatch.params.contentId} />
+      ) : null}
     </Wrapper>
   );
 };
