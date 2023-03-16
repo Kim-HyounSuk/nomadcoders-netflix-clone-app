@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/nomadcoders-netflix-clone-app/static/js/main.04a9ee87.js",
+    "main.js": "/nomadcoders-netflix-clone-app/static/js/main.e6b578d2.js",
     "index.html": "/nomadcoders-netflix-clone-app/index.html",
-    "main.04a9ee87.js.map": "/nomadcoders-netflix-clone-app/static/js/main.04a9ee87.js.map"
+    "main.e6b578d2.js.map": "/nomadcoders-netflix-clone-app/static/js/main.e6b578d2.js.map"
   },
   "entrypoints": [
-    "static/js/main.04a9ee87.js"
+    "static/js/main.e6b578d2.js"
   ]
 }
